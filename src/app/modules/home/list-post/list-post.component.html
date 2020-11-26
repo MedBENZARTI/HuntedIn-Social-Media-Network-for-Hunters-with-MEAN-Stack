@@ -1,0 +1,39 @@
+<mat-card *ngFor="let post of posts" class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{ post.title }}</mat-card-title>
+    <mat-card-subtitle>{{ post.subtitle }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      {{ post.content }}
+    </p>
+  </mat-card-content>
+  <img mat-card-image src="{{ post.src }}" alt="{{ post.alt }}" />
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        18 Likes {{ post.comments.length }} Comments
+      </mat-expansion-panel-header>
+      <div *ngFor="let comment of post.comments">
+        <mat-card style="margin: 5px; background-color: dimgrey; display: flex">
+          <p>
+            {{ comment }}
+          </p>
+        </mat-card>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-card-actions style="display: flex">
+    <button mat-button>LIKE</button>
+    <textarea
+      [(ngModel)]="newcomment"
+      class="comment"
+      placeholder="Write some.."
+    ></textarea>
+    <button (click)="onAddComment(post.id, newcomment)" mat-button>
+      COMMENT
+    </button>
+  </mat-card-actions>
+</mat-card>
+<!-- ' -->

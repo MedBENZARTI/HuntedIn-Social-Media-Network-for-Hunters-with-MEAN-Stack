@@ -1,0 +1,24 @@
+<header fxLayoutAlign="space-between centre">
+  <!-- logo and name -->
+  <div class="LogoAndName" fxLayoutGap="30px">
+    <img src="../../../assets/img/logo.png" alt="logo" />
+    <div class="textlogo">
+      <h1>HuntedIn</h1>
+    </div>
+  </div>
+  <!-- search box -->
+  <div class="wrapper">
+    <div fxLayout="row" class="search_box">
+      <input type="text" placeholder="search" />
+      <button mat-stroked-button>search</button>
+    </div>
+  </div>
+  <!-- right side options -->
+  <div class="RightSide" fxLayout="row" fxLayoutGap="20px">
+    <button mat-button routerLink="/profile">Profile</button>
+
+    <button mat-button routerLink="/login">
+      <img src="../../../../assets/img/icons/logout.png" class="logo" />
+    </button>
+  </div>
+</header>
