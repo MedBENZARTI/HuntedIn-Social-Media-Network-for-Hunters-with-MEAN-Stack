@@ -17,9 +17,5 @@ export class TestComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(CreatePostComponent);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 }

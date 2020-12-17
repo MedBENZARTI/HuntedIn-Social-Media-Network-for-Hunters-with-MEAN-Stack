@@ -10,6 +10,7 @@
       mat-icon-button
       [matMenuTriggerFor]="menu"
       aria-label="Example icon-button with a menu"
+      *ngIf="userIsAuthenticated"
     >
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -45,7 +46,7 @@
           </p>
         </mat-card>
       </div>
-      <mat-action-row>
+      <mat-action-row *ngIf="userIsAuthenticated">
         <button (click)="onLikePost(post.id)" mat-button>
           <mat-icon>whatshot</mat-icon>
         </button>

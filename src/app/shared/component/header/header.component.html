@@ -21,10 +21,18 @@
 
   <!-- right side options -->
   <div class="RightSide" fxLayout="row" fxLayoutGap="20px">
-    <button mat-button routerLink="/profile">Profile</button>
+    <button mat-button routerLink="/profile" *ngIf="userIsAuthenticated">
+      Profile
+    </button>
 
-    <button mat-button routerLink="/login">
+    <button mat-button (click)="onLogout()" *ngIf="userIsAuthenticated">
       <img src="../../../../assets/img/icons/logout.png" class="logo" />
+    </button>
+    <button mat-button routerLink="/signup" *ngIf="!userIsAuthenticated">
+      Sign Up
+    </button>
+    <button mat-button routerLink="/login" *ngIf="!userIsAuthenticated">
+      Log in
     </button>
   </div>
 </header>

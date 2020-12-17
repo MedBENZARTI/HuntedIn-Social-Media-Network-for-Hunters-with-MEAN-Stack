@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
 
@@ -13,7 +14,13 @@ export class ListPostComponent implements OnInit {
   postsSubsciption: Subscription;
   newcomment = '';
 
-  constructor(public postsService: PostService) {}
+  userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
+
+  constructor(
+    public postsService: PostService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.postsService.getPosts();
@@ -23,6 +30,13 @@ export class ListPostComponent implements OnInit {
       .getPostsUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts = posts.reverse();
+      });
+
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
       });
   }
 
@@ -43,5 +57,15 @@ export class ListPostComponent implements OnInit {
 
   ngOnDestroy() {
     this.postsSubsciption.unsubscribe();
+    this.authListenerSubs.unsubscribe();
   }
 }
+
+//
+// this.authListenerSubs = this.authService
+//     .getAuthStatusListener()
+//     .subscribe((isAuthenticated) => {
+//       this.userIsAuthenticated = isAuthenticated;
+//     });
+// ngOnDestroy() {
+// }

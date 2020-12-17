@@ -1,34 +1,40 @@
-<mat-accordion>
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Something NEW !! </mat-panel-title>
-    </mat-expansion-panel-header>
+<div mat-dialog-content *ngIf="userIsAuthenticated">
+  <mat-accordion>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Something NEW !! </mat-panel-title>
+      </mat-expansion-panel-header>
 
-    <form [formGroup]="form" (submit)="onAddPost()">
-      <mat-form-field appearance="outline">
-        <textarea
-          matInput
-          class="pub"
-          rows="6"
-          type="text"
-          placeholder="Express your self"
-          formControlName="content"
+      <form [formGroup]="form" (submit)="onAddPost()">
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            class="pub"
+            rows="6"
+            type="text"
+            placeholder="Express your self"
+            formControlName="content"
+          >
+          </textarea>
+        </mat-form-field>
+        <div
+          class="image-preview"
+          *ngIf="ImagePreview !== '' && ImagePreview && form.get('image').valid"
         >
-        </textarea>
-      </mat-form-field>
-      <div
-        class="image-preview"
-        *ngIf="ImagePreview !== '' && ImagePreview && form.get('image').valid"
-      >
-        <img [src]="ImagePreview" />
-      </div>
-      <mat-card-actions>
-        <input type="file" #filePicker (change)="onImagePicked($event)" />
-        <button type="button" mat-button (click)="filePicker.click()">
-          Image
-        </button>
-        <button type="submit" mat-stroked-button>Post</button>
-      </mat-card-actions>
-    </form>
-  </mat-expansion-panel>
-</mat-accordion>
+          <img [src]="ImagePreview" />
+        </div>
+        <mat-card-actions>
+          <input type="file" #filePicker (change)="onImagePicked($event)" />
+          <button type="button" mat-button (click)="filePicker.click()">
+            Image
+          </button>
+          <span class="spacer"></span>
+          <button type="button" mat-stroked-button (click)="onCancel()">
+            Cancel
+          </button>
+          <button type="submit" mat-stroked-button>Post</button>
+        </mat-card-actions>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

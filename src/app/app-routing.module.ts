@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuaard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 
@@ -28,6 +29,7 @@ const routes: Routes = [
       {
         path: 'newpost',
         component: TestComponent,
+        canActivate: [AuthGuaard],
       },
       {
         path: 'competition',
@@ -62,5 +64,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
+  providers: [AuthGuaard],
 })
 export class AppRoutingModule {}

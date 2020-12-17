@@ -32,7 +32,10 @@
       </mat-error>
     </mat-form-field>
     <div class="but">
-      <button type="submit" mat-raised-button color="accent">Sign Up</button>
+      <button type="submit" mat-raised-button color="accent" *ngIf="!isLoading">
+        Sign Up
+      </button>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
     </div>
   </form>
 </mat-card>

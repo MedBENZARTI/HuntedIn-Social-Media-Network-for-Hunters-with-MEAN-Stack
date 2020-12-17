@@ -1,10 +1,13 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { HomeComponent } from '../home.component';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { SidebarComponent } from 'src/app/shared/component/sidebar/sidebar.component';
+import { TestComponent } from 'src/app/test/test.component';
 import { PostService } from '../post.service';
-import { mimeType } from './mime-type.validator';
+// import { mimeType } from './mime-type.validator';
 // import { ListPostComponent } from '../list-post/list-post.component';
 
 @Component({
@@ -12,11 +15,19 @@ import { mimeType } from './mime-type.validator';
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit, OnDestroy {
   form: FormGroup;
   ImagePreview: string;
 
-  constructor(public postService: PostService) {}
+  userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
+
+  constructor(
+    public postService: PostService,
+    private authService: AuthService,
+    private router: Router,
+    public dialogRef: MatDialogRef<SidebarComponent>
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -25,6 +36,16 @@ export class CreatePostComponent implements OnInit {
       // { asyncValidators: mimeType }
       // we can add Validators.required to the validators array but after saving the post it asks for content in the text area
     });
+
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
+  }
+  ngOnDestroy() {
+    this.authListenerSubs.unsubscribe();
   }
 
   onImagePicked(event: Event) {
@@ -51,5 +72,11 @@ export class CreatePostComponent implements OnInit {
       this.form.value.image
     );
     this.form.reset();
+    this.router.navigate(['/home']);
+    this.dialogRef.close();
+  }
+  onCancel(): void {
+    this.router.navigate(['/home']);
+    this.dialogRef.close();
   }
 }
