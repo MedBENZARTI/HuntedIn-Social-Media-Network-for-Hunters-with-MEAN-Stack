@@ -26,3 +26,16 @@ input[type="file"] {
   size: 10px;
   font-size: 15px;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
+.image-preview {
+  height: 20rem;
+  margin: 1rem;
+}
+
+.image-preview img {
+  height: 100%;
+  padding-left: 6rem;
+}

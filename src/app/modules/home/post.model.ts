@@ -3,6 +3,7 @@ export interface Post {
   title: string;
   subtitle: string;
   src: string;
+  imagePath: string;
   alt: string;
   content: string;
   comments: String[];

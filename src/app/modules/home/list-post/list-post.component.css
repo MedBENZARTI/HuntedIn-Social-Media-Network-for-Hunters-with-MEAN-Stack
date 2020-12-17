@@ -22,3 +22,19 @@ mat-accordion {
   margin-left: 1rem;
   font-size: 15px;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
+.post-image {
+  width: 100%;
+  text-align: center;
+}
+.post-image img {
+  width: 100%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+.like {
+}
+.center {
+}

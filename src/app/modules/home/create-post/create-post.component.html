@@ -4,7 +4,7 @@
       <mat-panel-title> Something NEW !! </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+    <form [formGroup]="form" (submit)="onAddPost()">
       <mat-form-field appearance="outline">
         <textarea
           matInput
@@ -12,62 +12,23 @@
           rows="6"
           type="text"
           placeholder="Express your self"
-          name="content"
-          ngModel
-          #content="ngModel"
+          formControlName="content"
         >
         </textarea>
       </mat-form-field>
-
+      <div
+        class="image-preview"
+        *ngIf="ImagePreview !== '' && ImagePreview && form.get('image').valid"
+      >
+        <img [src]="ImagePreview" />
+      </div>
       <mat-card-actions>
-        <button type="submit" mat-button>Post</button>
-        <label class="custom-file-upload">
-          <input type="file" />
-          Photo
-        </label>
+        <input type="file" #filePicker (change)="onImagePicked($event)" />
+        <button type="button" mat-button (click)="filePicker.click()">
+          Image
+        </button>
+        <button type="submit" mat-stroked-button>Post</button>
       </mat-card-actions>
     </form>
   </mat-expansion-panel>
 </mat-accordion>
-
-<!-- <form (submit)="onAddPost(postForm)" #postForm="ngForm">
-  <mat-form-field>
-    <textarea
-      matInput
-      class="pub"
-      rows="6"
-      type="text"
-      placeholder="Express your self"
-      name="content"
-      ngModel
-      #content="ngModel"
-    >
-    </textarea>
-  </mat-form-field>
-
-  <mat-card-actions>
-    <button type="submit" mat-button>Post</button>
-    <label class="custom-file-upload">
-      <input type="file" />
-      Photo
-    </label>
-  </mat-card-actions>
-</form> -->
-
-<!--
-<mat-card>
-  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
-    <Textarea
-      class="pub"
-      rows="6"
-      type="text"
-      placeholder="Express your self"
-      name="content"
-      #content="ngModel"
-      ngModel
-      required
-    ></Textarea>
-    <br />
-    <button type="submit" mat-button>Post</button>
-  </form>
-</mat-card> -->

@@ -3,13 +3,36 @@
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{ post.title }}</mat-card-title>
     <mat-card-subtitle>{{ post.subtitle }}</mat-card-subtitle>
+
+    <span class="spacer"></span>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button mat-menu-item (click)="onDeletePost(post.id)">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
   </mat-card-header>
   <mat-card-content>
     <p>
       {{ post.content }}
     </p>
   </mat-card-content>
-  <img mat-card-image src="{{ post.src }}" alt="{{ post.alt }}" />
+  <br />
+  <div class="post-image">
+    <img mat-card-image [src]="post.imagePath" />
+  </div>
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -22,18 +45,19 @@
           </p>
         </mat-card>
       </div>
+      <mat-action-row>
+        <button (click)="onLikePost(post.id)" mat-button>
+          <mat-icon>whatshot</mat-icon>
+        </button>
+        <textarea
+          [(ngModel)]="newcomment"
+          class="comment"
+          placeholder="Write some.."
+        ></textarea>
+        <button (click)="onAddComment(post.id, newcomment)" mat-button>
+          <mat-icon>comment</mat-icon>
+        </button>
+      </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-card-actions style="display: flex">
-    <button mat-button>LIKE</button>
-    <textarea
-      [(ngModel)]="newcomment"
-      class="comment"
-      placeholder="Write some.."
-    ></textarea>
-    <button (click)="onAddComment(post.id, newcomment)" mat-button>
-      COMMENT
-    </button>
-  </mat-card-actions>
 </mat-card>
-<!-- ' -->
