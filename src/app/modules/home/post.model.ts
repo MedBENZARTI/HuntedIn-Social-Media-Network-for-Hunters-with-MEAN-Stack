@@ -6,5 +6,6 @@ export interface Post {
   imagePath: string;
   alt: string;
   content: string;
-  comments: String[];
+  comments: string[];
+  creator: string;
 }

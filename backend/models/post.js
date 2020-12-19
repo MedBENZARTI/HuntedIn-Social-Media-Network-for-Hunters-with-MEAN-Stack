@@ -8,6 +8,11 @@ const postSchema = mongoose.Schema({
   alt: { type: String, required: true },
   content: { type: String, required: true },
   comments: { type: Array, required: true },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Post", postSchema);

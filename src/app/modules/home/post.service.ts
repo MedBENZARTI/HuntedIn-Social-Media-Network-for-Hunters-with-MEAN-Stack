@@ -3,6 +3,7 @@ import { Post } from './post.model';
 import { Subject } from 'rxjs'; //like an event emmiter
 import { map } from 'rxjs/operators'; //like an event emmiter
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,8 @@ export class PostService {
       .get<{ message: string; posts: any }>('http://localhost:3000/api/posts')
       .pipe(
         map((postData) => {
+          console.log(postData);
+
           return postData.posts.map((post) => {
             return {
               title: post.title,
@@ -26,6 +29,7 @@ export class PostService {
               comments: post.comments,
               id: post._id,
               imagePath: post.imagePath,
+              creator: post.creator,
             };
           });
         })
@@ -62,14 +66,19 @@ export class PostService {
         postData
       )
       .subscribe((responseData) => {
+        // const post: Post = {
+        //   id: responseData.post.id,
+        //   title: title,
+        //   subtitle: subtitle,
+        //   src: responseData.post.imagePath,
+        //   imagePath: responseData.post.imagePath,
+        //   alt: alt,
+        //   content: content,
+        //   comments: [],
+
+        // };
         const post: Post = {
-          id: responseData.post.id,
-          title: title,
-          subtitle: subtitle,
-          src: responseData.post.imagePath,
-          imagePath: responseData.post.imagePath,
-          alt: alt,
-          content: content,
+          ...responseData.post,
           comments: [],
         };
 
@@ -77,6 +86,7 @@ export class PostService {
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]); // emetts a copy of my posts after updating it
       });
+    this.router.navigate(['/home']);
   }
 
   addComment(id: string, newcomment: string) {
@@ -99,5 +109,6 @@ export class PostService {
         this.postsUpdated.next([...this.posts]);
       });
   }
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient, public router: Router) {}
 }

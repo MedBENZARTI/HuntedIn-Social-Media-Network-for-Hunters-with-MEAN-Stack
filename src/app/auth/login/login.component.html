@@ -37,8 +37,14 @@
       </button>
       <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-      <button type="button" mat-raised-button routerLink="/home" color="accent">
-        Home
+      <button
+        type="button"
+        mat-raised-button
+        routerLink="/home"
+        color="accent"
+        *ngIf="!isLoading"
+      >
+        Guest
       </button>
     </div>
   </form>

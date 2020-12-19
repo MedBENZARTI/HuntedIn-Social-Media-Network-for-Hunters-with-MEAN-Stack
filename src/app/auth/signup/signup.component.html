@@ -4,6 +4,46 @@
     <mat-form-field appearance="outline">
       <input
         matInput
+        name="firstName"
+        #firstName="ngModel"
+        ngModel
+        type="text"
+        placeholder="First Name"
+        required
+      />
+      <mat-error *ngIf="firstName.invalid">
+        Please entre your first name
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        name="lastName"
+        #lastName="ngModel"
+        ngModel
+        type="text"
+        placeholder="Last Name"
+        required
+      />
+      <mat-error *ngIf="lastName.invalid">
+        Please entre your first name
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        name="discipline"
+        #discipline="ngModel"
+        ngModel
+        type="text"
+        placeholder=" Shooting, Clay pigeon shooting, Archery, ..."
+        required
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
         name="email"
         #emailInput="ngModel"
         ngModel
@@ -25,12 +65,29 @@
         #passwordInput="ngModel"
         required
         type="password"
-        placeholder="password"
+        placeholder="Type your password"
       />
       <mat-error *ngIf="passwordInput.invalid">
         Please entre a valid password
       </mat-error>
     </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        name="retypePassword"
+        ngModel
+        #retypePassword="ngModel"
+        required
+        type="password"
+        placeholder="Retype your password"
+      />
+      <mat-error *ngIf="passwordInput.value !== retypePassword.value">
+        password does not match!
+      </mat-error>
+    </mat-form-field>
+    {{ passwordInput.value }} <br />
+    {{ retypePassword.value }}
     <div class="but">
       <button type="submit" mat-raised-button color="accent" *ngIf="!isLoading">
         Sign Up

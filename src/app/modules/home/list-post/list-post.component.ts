@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Post } from '../post.model';
@@ -13,19 +14,22 @@ export class ListPostComponent implements OnInit {
   posts: Post[] = [];
   postsSubsciption: Subscription;
   newcomment = '';
-
   userIsAuthenticated = false;
+  userId: string;
+
   private authListenerSubs: Subscription;
 
   constructor(
     public postsService: PostService,
-    private authService: AuthService
+    private authService: AuthService,
+    public router: Router
   ) {}
 
   ngOnInit() {
     this.postsService.getPosts();
     // Subscribe() takes 3 args
     // 1/ a function that gets executed whenever new data is emitted
+    this.userId = this.authService.getUserId();
     this.postsSubsciption = this.postsService
       .getPostsUpdateListener()
       .subscribe((posts: Post[]) => {
@@ -37,6 +41,7 @@ export class ListPostComponent implements OnInit {
       .getAuthStatusListener()
       .subscribe((isAuthenticated) => {
         this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
       });
   }
 
@@ -60,12 +65,3 @@ export class ListPostComponent implements OnInit {
     this.authListenerSubs.unsubscribe();
   }
 }
-
-//
-// this.authListenerSubs = this.authService
-//     .getAuthStatusListener()
-//     .subscribe((isAuthenticated) => {
-//       this.userIsAuthenticated = isAuthenticated;
-//     });
-// ngOnDestroy() {
-// }

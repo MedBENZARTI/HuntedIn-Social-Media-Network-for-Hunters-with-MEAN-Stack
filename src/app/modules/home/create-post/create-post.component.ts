@@ -72,8 +72,8 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       this.form.value.image
     );
     this.form.reset();
-    this.router.navigate(['/home']);
     this.dialogRef.close();
+    this.router.navigate(['/home']);
   }
   onCancel(): void {
     this.router.navigate(['/home']);
