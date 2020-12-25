@@ -1,3 +1,4 @@
+<!-- <mat-spinner *ngIf="isLoading" ></mat-spinner> -->
 <mat-card *ngFor="let post of posts" class="example-card">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
@@ -10,7 +11,7 @@
       mat-icon-button
       [matMenuTriggerFor]="menu"
       aria-label="Example icon-button with a menu"
-      *ngIf="userIsAuthenticated && userId === post.creator"
+      *ngIf="userIsAuthenticated && user.id === post.creator"
     >
       <mat-icon>more_vert</mat-icon>
     </button>

@@ -37,8 +37,8 @@ router.post(
   (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
     const post = new Post({
-      title: "Shiba Inu", //req.body.title,
-      subtitle: "Dog", // req.body.subtitle,
+      title: req.body.title,
+      subtitle: req.body.subtitle,
       src: url + "/images/" + req.file.filename, //req.body.src,
       imagePath: url + "/images/" + req.file.filename,
       alt: "shiba photo", // req.body.alt,

@@ -7,8 +7,12 @@ const User = require("../models/user");
 const router = express.Router();
 
 router.post("/signup", (req, res, next) => {
+  console.log(req.body);
   bcrypt.hash(req.body.password, 10).then((hash) => {
     const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      discipline: req.body.discipline,
       email: req.body.email,
       password: hash,
     });
@@ -38,6 +42,7 @@ router.post("/login", (req, res, next) => {
         });
       }
       fetchedUser = user;
+      console.log(fetchedUser);
       return bcrypt.compare(req.body.password, user.password);
     })
     .then((result) => {
@@ -51,10 +56,11 @@ router.post("/login", (req, res, next) => {
         "secret_this_should_be_longer",
         { expiresIn: "1h" }
       );
+
       res.status(200).json({
         token: token,
         expiresIn: 3600,
-        userId: fetchedUser._id,
+        user: fetchedUser,
       });
     })
     .catch((err) => {

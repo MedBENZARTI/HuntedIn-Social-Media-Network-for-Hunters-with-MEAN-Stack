@@ -22,7 +22,7 @@
   <!-- right side options -->
   <div class="RightSide" fxLayout="row" fxLayoutGap="20px">
     <button mat-button routerLink="/profile" *ngIf="userIsAuthenticated">
-      Profile
+      <p>{{ userName }}</p>
     </button>
 
     <button mat-button (click)="onLogout()" *ngIf="userIsAuthenticated">

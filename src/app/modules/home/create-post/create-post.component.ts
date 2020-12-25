@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user.model';
 import { SidebarComponent } from 'src/app/shared/component/sidebar/sidebar.component';
 import { TestComponent } from 'src/app/test/test.component';
 import { PostService } from '../post.service';
@@ -18,6 +19,7 @@ import { PostService } from '../post.service';
 export class CreatePostComponent implements OnInit, OnDestroy {
   form: FormGroup;
   ImagePreview: string;
+  user: User;
 
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
@@ -63,9 +65,12 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     // if (this.form.invalid) {
     //   return;
     // }
+    // this.router.navigate(['/home/newpost']);
+
+    this.user = this.authService.getUser();
     this.postService.addPost(
-      null,
-      null,
+      this.user.firstName + ' ' + this.user.lastName,
+      this.user.discipline,
       null,
       null,
       this.form.value.content,

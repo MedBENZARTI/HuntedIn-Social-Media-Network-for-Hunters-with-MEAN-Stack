@@ -15,10 +15,7 @@ export class SidebarComponent implements OnInit {
 
   openDialog() {
     if (this.authService.getIsAuth()) {
-      const dialogRef = this.dialog.open(CreatePostComponent);
+      this.dialog.open(CreatePostComponent);
     }
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
   }
 }

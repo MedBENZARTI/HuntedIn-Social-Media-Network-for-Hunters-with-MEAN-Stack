@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user.model';
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
 
@@ -16,6 +17,7 @@ export class ListPostComponent implements OnInit {
   newcomment = '';
   userIsAuthenticated = false;
   userId: string;
+  user: User;
 
   private authListenerSubs: Subscription;
 
@@ -26,10 +28,20 @@ export class ListPostComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.user = {
+      id: '',
+      firstName: '',
+      lastName: '',
+      discipline: '',
+      email: '',
+      password: '',
+    };
+    if (this.authService.getIsAuth()) {
+      this.user = this.authService.getUser();
+    }
     this.postsService.getPosts();
     // Subscribe() takes 3 args
     // 1/ a function that gets executed whenever new data is emitted
-    this.userId = this.authService.getUserId();
     this.postsSubsciption = this.postsService
       .getPostsUpdateListener()
       .subscribe((posts: Post[]) => {
@@ -41,7 +53,7 @@ export class ListPostComponent implements OnInit {
       .getAuthStatusListener()
       .subscribe((isAuthenticated) => {
         this.userIsAuthenticated = isAuthenticated;
-        this.userId = this.authService.getUserId();
+        this.user = this.authService.getUser();
       });
   }
 
